@@ -1,0 +1,5 @@
+services:
+    telegram-bot:
+        extends:
+            file: ./base.yml
+            service: telegram-bot

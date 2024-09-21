@@ -1,0 +1,11 @@
+services:
+    telegram-bot:
+        build:
+            context: ../..
+            dockerfile: configs/docker/Dockerfile
+            target: telegram-bot
+            args:
+                NODE_IMAGE: node:20.12.2-alpine
+        restart: always
+        environment:
+            MESSAGE: ${MESSAGE}

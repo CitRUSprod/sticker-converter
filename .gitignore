@@ -1,0 +1,13 @@
+.vscode
+
+*.log
+
+.env
+
+node_modules
+.turbo
+out
+dist
+
+/storage/*
+!/storage/.gitkeep

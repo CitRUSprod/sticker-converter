@@ -1,0 +1,62 @@
+{
+    "name": "sticker-converter",
+    "private": true,
+    "scripts": {
+        "turbo": "turbo --no-daemon",
+        "dev": "pnpm turbo dev",
+        "build": "pnpm turbo build",
+        "check-types": "pnpm turbo check-types",
+        "commit": "git-cz",
+        "eslint": "eslint --color --no-error-on-unmatched-pattern",
+        "eslint:fix": "pnpm eslint --fix",
+        "eslint:all": "pnpm eslint \"**/*.{md,json,y?(a)ml,js,ts}\"",
+        "eslint:fix:all": "pnpm eslint:all --fix",
+        "lint": "pnpm eslint:all",
+        "format": "pnpm eslint:fix:all",
+        "validate": "pnpm check-types && pnpm lint",
+        "prepare": "husky"
+    },
+    "engines": {
+        "node": "20.12.2",
+        "pnpm": "9.0.6"
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-customizable"
+        },
+        "cz-customizable": {
+            "config": "./configs/commits/commitizen.js"
+        }
+    },
+    "lint-staged": {
+        "*.{md,json,y?(a)ml,js,ts}": "pnpm eslint:fix"
+    },
+    "prettier": "./configs/prettier/index.js",
+    "eslintConfig": {
+        "extends": "./configs/eslint/index.js",
+        "ignorePatterns": [
+            "pnpm-lock.yaml",
+            "dist",
+            "/storage"
+        ]
+    },
+    "devDependencies": {
+        "@citrus-linting/eslint-config": "0.22.0",
+        "@citrus-linting/prettier-config": "0.6.0",
+        "@commitlint/cli": "19.5.0",
+        "@local/configs": "workspace:*",
+        "@typescript-eslint/eslint-plugin": "7.18.0",
+        "@typescript-eslint/parser": "7.18.0",
+        "any-eslint-parser": "1.0.1",
+        "commitizen": "4.3.0",
+        "cz-customizable": "7.2.1",
+        "eslint": "8.57.1",
+        "eslint-config-prettier": "9.1.0",
+        "eslint-plugin-prettier": "5.2.1",
+        "husky": "9.1.6",
+        "lint-staged": "15.2.10",
+        "prettier": "3.3.3",
+        "turbo": "1.13.4",
+        "typescript": "5.5.4"
+    }
+}
