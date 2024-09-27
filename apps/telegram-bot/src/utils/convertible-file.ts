@@ -214,13 +214,14 @@ export class ConvertibleFile {
             }
 
             if (params.speed) {
-                ffmpegCommand.videoFilters(`setpts=${1 / params.speed}*PTS`)
+                ffmpegCommand.videoFilter(`setpts=${1 / params.speed}*PTS`)
             }
 
             ffmpegCommand
                 .input(params.input)
                 .output(params.output)
                 .outputFormat(params.outputFormat)
+                .outputOptions(["-pix_fmt yuva420p", "-crf 0", "-auto-alt-ref 0"])
                 .videoCodec("libvpx-vp9")
                 .noAudio()
                 .on("end", () => {
@@ -327,6 +328,7 @@ export class ConvertibleFile {
                 fps,
                 size: `${width}x${height}`,
                 duration,
+                bitrate: 1024,
                 speed,
                 outputFormat: templateType.format
             })
