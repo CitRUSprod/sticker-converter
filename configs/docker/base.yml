@@ -8,4 +8,4 @@ services:
                 NODE_IMAGE: node:20.12.2-alpine
         restart: always
         environment:
-            MESSAGE: ${MESSAGE}
+            TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
