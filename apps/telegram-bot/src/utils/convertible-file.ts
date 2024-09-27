@@ -234,6 +234,32 @@ export class ConvertibleFile {
         })
     }
 
+    private async _expandToSquare(
+        filePath: string,
+        templateKey: keyof typeof constants.fileTemplates
+    ) {
+        if (isMediaFile(filePath)) {
+            const template = constants.fileTemplates[templateKey]
+            const templateType = template[isStaticMediaFile(filePath) ? "static" : "dynamic"]
+
+            const metadata = await this._getMetadata(filePath)
+
+            if (templateType.square && metadata.width !== metadata.height) {
+                const maxSize = Math.max(metadata.width, metadata.height)
+
+                await this._ffmpegConvert({
+                    input: filePath,
+                    output: `${filePath}_`,
+                    outputFormat: templateType.format,
+                    size: `${maxSize}x${maxSize}`
+                })
+
+                await fs.remove(filePath)
+                await fs.move(`${filePath}_`, filePath)
+            }
+        }
+    }
+
     private async _compress(filePath: string, templateKey: keyof typeof constants.fileTemplates) {
         if (isMediaFile(filePath)) {
             const template = constants.fileTemplates[templateKey]
@@ -333,6 +359,7 @@ export class ConvertibleFile {
                 outputFormat: templateType.format
             })
 
+            await this._expandToSquare(outputFilePath, templateKey)
             await this._compress(outputFilePath, templateKey)
         }
     }
