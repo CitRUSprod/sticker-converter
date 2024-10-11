@@ -260,7 +260,11 @@ export class ConvertibleFile {
         }
     }
 
-    private async _compress(filePath: string, templateKey: keyof typeof constants.fileTemplates) {
+    private async _compress(
+        filePath: string,
+        templateKey: keyof typeof constants.fileTemplates,
+        bitrate?: number
+    ) {
         if (isMediaFile(filePath)) {
             const template = constants.fileTemplates[templateKey]
             const templateType = template[isStaticMediaFile(filePath) ? "static" : "dynamic"]
@@ -268,17 +272,23 @@ export class ConvertibleFile {
             const metadata = await this._getMetadata(filePath)
 
             if (metadata.size > templateType.maxSizeKB) {
+                const newBitrate = Math.round((bitrate ?? metadata.bitrate) * 0.8)
+
                 await this._ffmpegConvert({
                     input: filePath,
                     output: `${filePath}_`,
-                    bitrate: Math.round(metadata.bitrate * 0.8),
+                    bitrate: newBitrate,
                     outputFormat: templateType.format
                 })
 
-                await fs.remove(filePath)
-                await fs.move(`${filePath}_`, filePath)
+                const newMetadata = await this._getMetadata(`${filePath}_`)
 
-                await this._compress(filePath, templateKey)
+                if (newMetadata.size > templateType.maxSizeKB) {
+                    await this._compress(filePath, templateKey, newBitrate)
+                } else {
+                    await fs.remove(filePath)
+                    await fs.move(`${filePath}_`, filePath)
+                }
             }
         }
     }
@@ -376,7 +386,7 @@ export class ConvertibleFile {
             const arrayBuffer = await res.arrayBuffer()
             await fs.outputFile(
                 path.join(cf._inputDirPath, cf._inputFileName),
-                Buffer.from(arrayBuffer)
+                new Uint8Array(arrayBuffer)
             )
 
             await cf._unzip()
@@ -385,6 +395,10 @@ export class ConvertibleFile {
         } else {
             throw new Error(`File "${fileName}" is not allowed`)
         }
+    }
+
+    public static async removeAll() {
+        await fs.emptyDir(getAbsFilesPath())
     }
 
     public async convert(templateKey: keyof typeof constants.fileTemplates) {
