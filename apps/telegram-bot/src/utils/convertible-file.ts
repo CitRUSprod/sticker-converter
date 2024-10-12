@@ -328,7 +328,9 @@ export class ConvertibleFile {
 
             if (
                 metadata.width > templateType.resolution ||
-                metadata.height > templateType.resolution
+                metadata.height > templateType.resolution ||
+                (metadata.width < templateType.resolution &&
+                    metadata.height < templateType.resolution)
             ) {
                 if (metadata.width > metadata.height) {
                     width = templateType.resolution
