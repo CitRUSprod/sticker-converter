@@ -3,6 +3,7 @@ interface FileTemplate {
     resolution: number
     fps: number
     duration: number
+    bitrate: number
     maxSizeKB: number
     square: boolean
 }
@@ -17,6 +18,7 @@ export const fileTemplates = {
             resolution: 512,
             fps: 4,
             duration: 3,
+            bitrate: 1024,
             maxSizeKB: 256,
             square: false
         },
@@ -25,6 +27,7 @@ export const fileTemplates = {
             resolution: 512,
             fps: 30,
             duration: 3,
+            bitrate: 1024,
             maxSizeKB: 256,
             square: false
         }
@@ -36,6 +39,7 @@ export const fileTemplates = {
             resolution: 100,
             fps: 4,
             duration: 3,
+            bitrate: 256,
             maxSizeKB: 64,
             square: true
         },
@@ -44,6 +48,7 @@ export const fileTemplates = {
             resolution: 100,
             fps: 30,
             duration: 3,
+            bitrate: 128,
             maxSizeKB: 64,
             square: true
         }

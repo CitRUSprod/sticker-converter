@@ -366,7 +366,7 @@ export class ConvertibleFile {
                 fps,
                 size: `${width}x${height}`,
                 duration,
-                bitrate: 1024,
+                bitrate: templateType.bitrate,
                 speed,
                 outputFormat: templateType.format
             })
