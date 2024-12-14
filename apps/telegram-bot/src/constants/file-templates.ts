@@ -39,7 +39,7 @@ export const fileTemplates = {
             resolution: 100,
             fps: 4,
             duration: 3,
-            bitrate: 256,
+            bitrate: 128,
             maxSizeKB: 64,
             square: true
         },
