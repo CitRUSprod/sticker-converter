@@ -18,7 +18,7 @@ export const fileTemplates = {
             resolution: 512,
             fps: 4,
             duration: 3,
-            bitrate: 768,
+            bitrate: 512,
             maxSizeKB: 256,
             square: false
         },
@@ -27,13 +27,13 @@ export const fileTemplates = {
             resolution: 512,
             fps: 30,
             duration: 3,
-            bitrate: 768,
+            bitrate: 512,
             maxSizeKB: 256,
             square: false
         }
     },
     "telegram-emoji": {
-        name: "Telegram Emojis",
+        name: "Telegram Emoji",
         static: {
             format: "webm",
             resolution: 100,
