@@ -1,6 +1,6 @@
 export const staticMediaFiles = [".png", ".jpg"] as const
 
-export const dynamicMediaFiles = [".gif", ".mp4", ".webm"] as const
+export const dynamicMediaFiles = [".gif", ".mp4", ".webm", ".mov"] as const
 
 export const mediaFiles = [...staticMediaFiles, ...dynamicMediaFiles] as const
 
